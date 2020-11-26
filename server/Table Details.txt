@@ -1,4 +1,6 @@
-Table Name = users
+DB Name = "partyhost"
+
+Table Name = "users"
 
 CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -11,7 +13,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
-Table Name = password_storage
+Table Name = "password_storage"
 
 CREATE TABLE `password_storage` (
   `user_id` int NOT NULL,
