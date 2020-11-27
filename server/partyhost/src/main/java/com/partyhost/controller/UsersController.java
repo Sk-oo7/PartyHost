@@ -1,6 +1,8 @@
 package com.partyhost.controller;
 
+import com.partyhost.exception.EmailPasswordDidNotMatchException;
 import com.partyhost.exception.UserAlreadyExistsException;
+import com.partyhost.model.EmailPasswordModel;
 import com.partyhost.model.Users;
 import com.partyhost.repository.UsersRepository;
 
@@ -29,6 +31,22 @@ public class UsersController {
             }
         }
         return usersRepository.save(user);
+    }
+
+    @PostMapping("/user/login")
+    public Users login(@RequestBody EmailPasswordModel emailPasswordModel) {
+        List<Users> users = getAllUsers();
+        for (Users tempUser: users) {
+            if (emailPasswordModel.getEmailId().equals(tempUser.getEmailId())) {
+                if(tempUser.passwordAuthenticate(emailPasswordModel.getPassword())) {
+                    return tempUser;
+                }
+                else {
+                    throw new EmailPasswordDidNotMatchException();
+                }
+            }
+        }
+        throw new EmailPasswordDidNotMatchException();
     }
 
 }
