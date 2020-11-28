@@ -1,5 +1,6 @@
 package com.partyhost.controller;
 
+import com.partyhost.exception.BadRequestException;
 import com.partyhost.exception.EmailPasswordDidNotMatchException;
 import com.partyhost.exception.UserAlreadyExistsException;
 import com.partyhost.model.EmailPasswordModel;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -47,6 +49,28 @@ public class UsersController {
             }
         }
         throw new EmailPasswordDidNotMatchException();
+    }
+
+    @PostMapping("/user/updateUserCredentials")
+    public Users updateCredentials(@RequestBody Users user) {
+        Optional<Users> tempUser = usersRepository.findById(user.getId());
+        if(tempUser.isPresent()) {
+            Users matchedUser = tempUser.get();
+            if (user.getFirstName() != null) {
+                matchedUser.setFirstName(user.getFirstName());
+            }
+            if (user.getLastName() != null) {
+                matchedUser.setLastName(user.getLastName());
+            }
+            if (user.getMobileNumber() != null) {
+                matchedUser.setMobileNumber(user.getMobileNumber());
+            }
+            usersRepository.save(matchedUser);
+            return matchedUser;
+        }
+        else {
+            throw new BadRequestException();
+        }
     }
 
 }
