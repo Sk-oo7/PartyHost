@@ -73,4 +73,18 @@ public class UsersController {
         }
     }
 
+    @PostMapping("/user/updateUserPassword")
+    public Users updatePassword(@RequestBody EmailPasswordModel emailPasswordModel) {
+        Optional<Users> tempUser = usersRepository.findById(emailPasswordModel.getId());
+        if(tempUser.isPresent()) {
+            Users matchedUser = tempUser.get();
+            matchedUser.setPassword(emailPasswordModel.getPassword());
+            usersRepository.save(matchedUser);
+            return matchedUser;
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
 }
