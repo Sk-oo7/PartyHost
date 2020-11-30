@@ -9,7 +9,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -26,7 +26,7 @@ public class Users {
     @Column(table = "password_storage", name="password")
     private String password;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

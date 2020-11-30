@@ -3,7 +3,6 @@ package com.partyhost.controller;
 import com.partyhost.exception.BadRequestException;
 import com.partyhost.exception.EmailPasswordDidNotMatchException;
 import com.partyhost.exception.UserAlreadyExistsException;
-import com.partyhost.model.EmailPasswordModel;
 import com.partyhost.model.Users;
 import com.partyhost.repository.UsersRepository;
 
@@ -36,11 +35,11 @@ public class UsersController {
     }
 
     @PostMapping("/user/login")
-    public Users login(@RequestBody EmailPasswordModel emailPasswordModel) {
+    public Users login(@RequestParam String emailId, @RequestParam String password) {
         List<Users> users = getAllUsers();
         for (Users tempUser: users) {
-            if (emailPasswordModel.getEmailId().equals(tempUser.getEmailId())) {
-                if(tempUser.passwordAuthenticate(emailPasswordModel.getPassword())) {
+            if (emailId.equals(tempUser.getEmailId())) {
+                if(tempUser.passwordAuthenticate(password)) {
                     return tempUser;
                 }
                 else {
@@ -74,11 +73,11 @@ public class UsersController {
     }
 
     @PostMapping("/user/updateUserPassword")
-    public Users updatePassword(@RequestBody EmailPasswordModel emailPasswordModel) {
-        Optional<Users> tempUser = usersRepository.findById(emailPasswordModel.getId());
+    public Users updatePassword(@RequestParam Long id, @RequestParam String password) {
+        Optional<Users> tempUser = usersRepository.findById(id);
         if(tempUser.isPresent()) {
             Users matchedUser = tempUser.get();
-            matchedUser.setPassword(emailPasswordModel.getPassword());
+            matchedUser.setPassword(password);
             usersRepository.save(matchedUser);
             return matchedUser;
         }
