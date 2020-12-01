@@ -1,0 +1,83 @@
+body{
+    width:100%;
+    left:0px;
+    height:100%;
+}
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top:2vh;
+
+}
+
+.home {
+    border: 0px;
+    background-color: D9D9D9;
+    padding-left:2.5%;
+    padding-right: 2.5%;
+    border-radius: 100px;
+    margin-right: 3%;
+    font-size:16px;
+    padding-top:0%;
+    padding-bottom: 0%;
+}
+
+.about {
+    border: 0px;
+    background-color: white;
+    margin-right: 4%;
+    font-size:16px;
+}
+
+.box {
+    padding: 0.3%;
+    border: 2.49px solid black;
+    border-radius: 4px;
+    margin-right: 2%;
+     font-size:16px;
+}
+
+.login,
+.signup {
+    background-color: white;
+    border: 0px;
+     font-size:16px;
+    padding: 0px;
+}
+
+.container {position: relative;
+    margin-top: 7vh;
+    background-image: linear-gradient(to right, rgb(201, 87, 90), rgb(38, 38, 38));
+    height: 45vh;
+    width: 90vw;
+    border-top-right-radius: 20% 50%;
+    border-bottom-right-radius: 20% 50%;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+   padding-top:25vh;
+animation: myfirst 1s;
+}
+
+@keyframes myfirst {
+0%   {left: -90vw; top: 0px;}
+100%  {left:0vw; top: 0px;}
+
+}
+.m1 {
+    color: white;
+    font-size: 20px;
+    font-family: "Trebuchet MS";
+}
+
+.boxx {
+    border: 0px;
+    background-color: white;
+    padding-left: 10%;
+    font-size: 24px;
+    padding-right: 10%;
+    padding-top: 1.8%;
+    padding-bottom: 2%;
+    border-radius: 100px;
+}
