@@ -3,13 +3,17 @@ package com.partyhost.controller;
 import com.partyhost.exception.BadRequestException;
 import com.partyhost.exception.EmailPasswordDidNotMatchException;
 import com.partyhost.exception.UserAlreadyExistsException;
+import com.partyhost.exception.UserDoesNotExistException;
+import com.partyhost.model.UserFriends;
 import com.partyhost.model.Users;
+import com.partyhost.repository.UserFriendsRepository;
 import com.partyhost.repository.UsersRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -35,7 +39,9 @@ public class UsersController {
     }
 
     @PostMapping("/user/login")
-    public Users login(@RequestParam String emailId, @RequestParam String password) {
+    public Users login(@RequestBody Map<String, String> json) {
+        String emailId = json.get("emailId");
+        String password = json.get("password");
         List<Users> users = getAllUsers();
         for (Users tempUser: users) {
             if (emailId.equals(tempUser.getEmailId())) {
@@ -72,8 +78,10 @@ public class UsersController {
         }
     }
 
-    @PostMapping("/user/updateUserPassword")
-    public Users updatePassword(@RequestParam Long id, @RequestParam String password) {
+    @PostMapping("/user/updatePassword")
+    public Users updatePassword(@RequestBody Map<String, String> json) {
+        Long id = Long.parseLong(json.get("id"));
+        String password = json.get("password");
         Optional<Users> tempUser = usersRepository.findById(id);
         if(tempUser.isPresent()) {
             Users matchedUser = tempUser.get();
