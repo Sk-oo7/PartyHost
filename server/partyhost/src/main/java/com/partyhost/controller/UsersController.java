@@ -23,6 +23,11 @@ public class UsersController {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private UserFriendsRepository userFriendsRepository;
+
+    private final UsersControllerFunctions usersControllerFunctions = new UsersControllerFunctions();
+
     private List<Users> getAllUsers() {
         return usersRepository.findAll();
     }
@@ -92,6 +97,54 @@ public class UsersController {
         else {
             throw new BadRequestException();
         }
+    }
+
+    @PostMapping("user/addFriend")
+    public List<Users> addFriend(@RequestBody Map<String, String> json) {
+        Long userId = Long.parseLong(json.get("id"));
+        String friendEmailId = json.get("friendEmailId");
+        Optional<Users> tempUser = usersRepository.findById(userId);
+        Long friendId = usersControllerFunctions.findIdByEmail(friendEmailId);
+        Optional<Users> tempFriend = usersRepository.findById(friendId);
+        if(tempUser.isPresent() && tempFriend.isPresent() && !userId.equals(friendId)) {
+            Users user = tempUser.get();
+            UserFriends newFriend = new UserFriends(user, friendId);
+            userFriendsRepository.save(newFriend);
+            Users friend = tempFriend.get();
+            UserFriends reverseFriendship = new UserFriends(friend, userId);
+            userFriendsRepository.save(reverseFriendship);
+            return user.getFriendsList(usersRepository);
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
+    @PostMapping("user/friendList")
+    public List<Users> getFriendList(@RequestBody Map<String, String> json) {
+        Long userId = Long.parseLong(json.get("id"));
+        Optional<Users> tempUser = usersRepository.findById(userId);
+        if(tempUser.isPresent()) {
+            Users user = tempUser.get();
+            return user.getFriendsList(usersRepository);
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
+    public class UsersControllerFunctions {
+
+        public Long findIdByEmail(String emailId) {
+            List<Users> usersList = usersRepository.findAll();
+            for (Users user: usersList) {
+                if(emailId.equals(user.getEmailId())) {
+                    return user.getId();
+                }
+            }
+            throw new UserDoesNotExistException();
+        }
+
     }
 
 }

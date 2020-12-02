@@ -20,3 +20,12 @@ CREATE TABLE `password_storage` (
   `password` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+Table Name = "friend_list"
+
+CREATE TABLE `friend_list` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `friend_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

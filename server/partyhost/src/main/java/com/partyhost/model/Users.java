@@ -1,6 +1,11 @@
 package com.partyhost.model;
 
+import com.partyhost.repository.UsersRepository;
+
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +30,9 @@ public class Users {
 
     @Column(table = "password_storage", name="password")
     private String password;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserFriends> userFriendsList;
 
     public Long getId() {
         return id;
@@ -68,5 +76,21 @@ public class Users {
 
     public boolean passwordAuthenticate(String password) {
         return this.password.equals(password);
+    }
+
+    public List<Users> getFriendsList(UsersRepository usersRepository) {
+        List<Users> list = new LinkedList<>();
+        for (UserFriends userFriends: userFriendsList) {
+            Long friendId = userFriends.getFriendId();
+            Optional<Users> friend = usersRepository.findById(friendId);
+            if(friend.isPresent()) {
+                list.add(friend.get());
+            }
+        }
+        return list;
+    }
+
+    public void setUserFriendsList(List<UserFriends> userFriendsList) {
+        this.userFriendsList = userFriendsList;
     }
 }
