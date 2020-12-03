@@ -1,104 +1,103 @@
-.div1{
-    background-color: #e75a5a;
-    width: 50%;
-    height: 100vh;
+.div1 {
+  background-color: #e75a5a;
+  width: 50%;
+  height: 100vh;
 }
 .slider {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 .slider_img {
-    width: 60%;
-    margin-top: 25%;
-    margin-left: 20%;
-    height: 200px;
+  width: 60%;
+  margin-top: 25%;
+  margin-left: 20%;
+  height: 200px;
 }
 .slider_para {
-    color: white;
-    font-size: 16px;
-    text-align: center;
+  color: white;
+  font-size: 16px;
+  text-align: center;
 }
 .top_slider_para {
-    margin-top: 20%;
-    
+  margin-top: 20%;
 }
 
 .div2 {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .div2 h1 {
-    margin-bottom: 8%;
+  margin-bottom: 8%;
 }
 .login_form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 .login_form input {
-    background-color: lightgray;
-    border-radius: 20px;
-    width: 65%;
-    height: 0px;
-    padding: 20px;
-    border: none;
-    outline: none;
+  background-color: lightgray;
+  border-radius: 20px;
+  width: 65%;
+  height: 0px;
+  padding: 20px;
+  border: none;
+  outline: none;
 }
-.login_form button {
-    background-color: #e94646;
-    border: none;
-    padding: 12px;
-    width: 33%;
-    border-radius: 50px;
-    color: white;
-    font-size: 15px;
-    outline: none;
+.login_form > .submit {
+  background-color: #e94646;
+  border: none;
+  padding: 12px;
+  width: 33%;
+  border-radius: 50px;
+  color: white;
+  font-size: 15px;
+  outline: none;
 }
 .line {
-    width: 60%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 .line span {
-    border: 1px solid lightgray;
-    height: 0px;
-    width: 45%;
-    border-bottom: 0px;
-    margin-top: 5px;
+  border: 1px solid lightgray;
+  height: 0px;
+  width: 45%;
+  border-bottom: 0px;
+  margin-top: 5px;
 }
 .signIn_with_google {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px solid gray;
-    border-radius: 40px;
-    padding: 1.7%;
-    width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid gray;
+  border-radius: 40px;
+  padding: 1.7%;
+  width: 40%;
 }
-.signIn_with_google img{
-    height: 30px;
-    width: 33px;
+.signIn_with_google img {
+  height: 30px;
+  width: 33px;
 }
-.signIn_with_google span{
-    border-left: 1px solid #b8b894;
-    height: 25px;
-    color: #b8b894; 
+.signIn_with_google span {
+  border-left: 1px solid #b8b894;
+  height: 25px;
+  color: #b8b894;
 }
 .signIn_with_google p {
-    color: #b8b894;
+  color: #b8b894;
 }
 .last_para p {
-    margin-top: 20%;
+  margin-top: 20%;
 }
 .last_para a {
-    color: red;
-    text-decoration: none;
+  color: red;
+  text-decoration: none;
 }
