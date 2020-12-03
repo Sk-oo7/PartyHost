@@ -23,7 +23,7 @@ function Slider() {
         }
       };
     return (
-        <div class="slider">
+        <div className="slider">
             <Carousel 
                 showDots={true}
                 responsive={responsive}
