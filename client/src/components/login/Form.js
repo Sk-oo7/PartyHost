@@ -1,13 +1,14 @@
 import React , {useState} from 'react'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
+import axios from "axios"
 
 import "./styles.css"
 
 function Form() {
 
-
+    const history = useHistory()
     const [password,setPassword]=useState("");
     const [email,setEmail]=useState("");
     const [error,setError]=useState("");
@@ -27,27 +28,19 @@ function Form() {
             setErroralert(true)
             return
         }
-        
-        if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/.test(password)){
-            setError("Invalid Password")
-            setErroralert(true)
-            return
+
+        let data = {
+            emailId:email,
+            password:password
         }
 
-        fetch("http://localhost:8080/api/v1/user/login",{
-            method:"post",
-            headers:{
-                "Content-Type":"application/json",
-            },
-            mode:"no-cors",
-            body:JSON.stringify({
-                emailId:email,
-                password:password,
-            })
+        axios.post("http://localhost:8080/api/v1/user/login",
+        data,{
+        headers:{
+                    "Content-Type":"application/json",
+                }
         })
-        .then(res=>{
-            res.json()
-        })
+        .then(res=>res.data)
         .then(data=>{
             console.log(data)
             if(data.error){
@@ -55,18 +48,19 @@ function Form() {
                 setErroralert(true)
             }
             else{
-                // localStorage.setItem("jwt",data.token)
-                // localStorage.setItem("user",JSON.stringify(data.user))
-                setSuccess("Successfully signed in")
+                localStorage.setItem("user",JSON.stringify(data))
+                setSuccess("Successfully signed in. Loading....")
                 setSuccessalert(true)
-                // setTimeout(() => {
-                //     history.push("/")
-                //   }, 1500);
+                setTimeout(() => {
+                    history.push("/")
+                  }, 1500);
                 
             }
         })
         .catch(err=>{
-            console.log(err)
+            console.log(err.response.data.message);
+            setError(err.response.data.message)
+            setErroralert(true)
         })
     }
 
