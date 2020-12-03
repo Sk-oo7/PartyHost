@@ -4,7 +4,6 @@ import "./style.css"
 
 function HomePage(classProp) {
     const [toggleClass,setClass] = useState(classProp.classProp)
-    console.log(toggleClass)
     return (
         <div className="div">
             <div className={classProp.classProp}>

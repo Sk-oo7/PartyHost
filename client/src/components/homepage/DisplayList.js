@@ -4,7 +4,7 @@ function DisplayList() {
     const friendsName = ["Shubham Khullar","Tanish","Muskan","Govind"]
     const len = friendsName.length-1
     const listFriends = friendsName.map((friendName,index) =>
-        <div>
+        <div key={index}>
             <div className="friends_name">
                 <p className="friends_icon">{friendName.charAt(0)}</p>
                 <div className="friends_info">

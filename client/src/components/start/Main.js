@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import "./styles.css"
 
@@ -16,8 +17,8 @@ function Main() {
                 <span className="boxx"> 
                     <button className="login" 
                         style={{fontSize:"20px",border:"none",outline:"none"}}>
-                        <i>Sign In</i></button> /<button className="signup"
-                 style={{fontSize:"20px",border:"none",outline:"none"}}><i>Sign Up</i></button></span>
+                        <i className="link"><Link to="/login">Sign In</Link></i></button> /<button className="signup"
+                 style={{fontSize:"20px",border:"none",outline:"none"}}><i className="link"><Link to="/register">Sign Up</Link></i></button></span>
             </center>
         </div>
         <div style={{fontSize:"20px",color:"white"}}>

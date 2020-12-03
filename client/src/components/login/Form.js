@@ -42,7 +42,6 @@ function Form() {
         })
         .then(res=>res.data)
         .then(data=>{
-            console.log(data)
             if(data.error){
                 setError(data.error)
                 setErroralert(true)
