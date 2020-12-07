@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.Serial;
 
 @ResponseStatus(value = HttpStatus.CONFLICT)
-public class UserDoesNotExistException extends RuntimeException {
+public class AlreadyAFriendException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public UserDoesNotExistException() {
-        super("This user with the provided email id doesn't exists.");
+    public AlreadyAFriendException() {
+        super("A user with the given email address is already your friend");
     }
+
 }
