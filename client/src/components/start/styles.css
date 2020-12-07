@@ -39,15 +39,15 @@ body {
 
 .login,
 .signup {
-  background-color: white;
+  background-color: lightgray;
   border: 0px;
-  font-size: 16px;
+  font-size: 20px;
   padding: 0px;
 }
 
 .container {
   position: relative;
-  margin-top: 7vh;
+  margin-top: 10vh;
   background-image: linear-gradient(
     to right,
     rgb(201, 87, 90),
@@ -76,19 +76,16 @@ body {
 }
 .m1 {
   color: white;
-  font-size: 20px;
+  font-size: 22px;
   font-family: "Trebuchet MS";
 }
 
 .boxx {
   border: 0px;
-  background-color: white;
-  padding-left: 10%;
+  background-color: lightgray;
   font-size: 24px;
-  padding-right: 10%;
-  padding-top: 1.8%;
-  padding-bottom: 2%;
-  border-radius: 100px;
+  padding: 14px 30px 20px 30px;
+  border-radius: 30px;
 }
 a {
   color: black;

@@ -3,7 +3,6 @@ import HomePage from "../../screens/hompage/HomePage";
 import StartPage from "../../screens/start/StartPage";
 import HamburgerMenu from "./HamburgerMenu";
 import img from "./user.png";
-//  import closeIcon from "../../../public/close_icon.png"
 
 import "./styles.css";
 
@@ -25,47 +24,39 @@ function MainPage() {
     setToggle(false);
   };
 
-  
-//   document.getElementById("main_add_friend").addEventListener("click",function(){
-//     document.getElementById("center_alert").style.display="block";
-// });
-// document.getElementById("close1").addEventListener("click",function(){
-//     document.getElementById("center_alert").style.display="none";
-// });
-
 
   return (
     <div>
-        {showAddfrnd && <div id="center_alert" >
-        
-<span style={{position:"relative"}}><center className="center_alert_head">Add Friend</center></span>
-<img src="close_icon.png" id="close1" onClick={()=>setAddfriend(false)} />
-<form>
-<center><input type="textbox" className="center_alert_input" style={{borderRadius:"40px"}}
-placeholder="Type to Search" required/></center>
-<br/>
-<center><input  className="center_alert_submit" style={{borderRadius:"40px"}}type="submit" value="Add Friend"/></center>
+        {showAddfrnd && userexists && <div id="center_alert" >
+                  
+          <span style={{position:"relative"}}><center className="center_alert_head">Add Friend</center></span>
+          <img src="close_icon.png" id="close1" onClick={()=>setAddfriend(false)} />
+          <form>
+          <center><input type="textbox" className="center_alert_input" style={{borderRadius:"40px"}}
+          placeholder="Type to Search" required/></center>
+          <br/>
+          <center><input  className="center_alert_submit" style={{borderRadius:"40px"}}type="submit" value="Add Friend"/></center>
 
-</form>
-<br/>
+          </form>
+          <br/>
         </div>}
 
-      {showEditProfile &&  <div id="center_alert2" >
-        
-<span style={{position:"relative"}}><center className="center_alert_head">Edit Profile</center></span>
-<img src="close_icon.png" id="close2" onClick={()=>setEditProfile(false)}/>
-<form>
-<center>
-    <input type="textbox" className="center_alert_input2" placeholder="  First Name" style={{borderRadius:"20px"}}required/>
-<input type="textbox" className="center_alert_input2" placeholder="  Last Name" style={{borderRadius:"20px"}}required/>
-</center>
-<br/>
-<center><input  className="center_alert_input3"style={{borderRadius:"20px",border:"0px"}} type="textbox" placeholder="  Change phone number" required/></center>
-<br/>
-<center><input  className="center_alert2_submit"style={{borderRadius:"20px"}} type="submit" value="Add Friend"/></center>
+      {showEditProfile && userexists &&  <div id="center_alert2" >
+                
+        <span style={{position:"relative"}}><center className="center_alert_head">Edit Profile</center></span>
+        <img src="close_icon.png" id="close2" onClick={()=>setEditProfile(false)}/>
+        <form>
+        <center>
+            <input type="textbox" className="center_alert_input2" placeholder="  First Name" style={{borderRadius:"20px"}}required/>
+        <input type="textbox" className="center_alert_input2" placeholder="  Last Name" style={{borderRadius:"20px"}}required/>
+        </center>
+        <br/>
+        <center><input  className="center_alert_input3"style={{borderRadius:"20px",border:"0px"}} type="textbox" placeholder="  Change phone number" required/></center>
+        <br/>
+        <center><input  className="center_alert2_submit"style={{borderRadius:"20px"}} type="submit" value="Add Friend"/></center>
 
-</form>
-<br/>
+        </form>
+        <br/>
         </div>}
       <div className="navbar">
         <button className="hamburger_button" onClick={() => setToggle(!toggle)}>
@@ -75,19 +66,25 @@ placeholder="Type to Search" required/></center>
           <b>Home</b>
         </button>
         <button className="about_button">About</button>
-        <div class="dropdown" >
-          <button className="username_button"  style={{height:"45px"}}>
+        {userexists && <div className="dropdown" >
+          <button className="username_button"  style={{height:"45px",width:"180px"}}>
             <img style={{ height: "25px", float: "left" }} src={img} />
             <b style={{ position: "relative", top: "5px", left: "-5px" }}>
               {userexists ? user?.firstName + " " + user?.lastName : "Username"}
             </b>
           </button>
-          <div class="dropdown-content">
+          <div className="dropdown-content">
             <span onClick={()=>setAddfriend(true)} id="main_add_friend">Add Friend</span>
             <span  onClick={()=>setEditProfile(true)} >Edit Profile</span>
             <span>Sign-Out</span>
           </div>
-        </div>
+        </div>}
+        {!userexists && <button className="username_button"  style={{height:"45px",marginRight:"112px"}}>
+            <img style={{ height: "25px", float: "left" }} src={img} />
+            <b style={{ position: "relative", top: "5px", left: "-5px" }}>
+              {userexists ? user?.firstName + " " + user?.lastName : "Username"}
+            </b>
+          </button>}
       </div>
    
       {userexists && toggle && (

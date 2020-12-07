@@ -8,7 +8,7 @@ function HomePage(classProp) {
         <div className="div">
             <div className={classProp.classProp}>
                 <div className="grad_div1">
-                    <h1 style={{fontSize: "40px",}}><i>PartyHost</i></h1>
+                    <h1 style={{fontSize: "40px"}}><i>PartyHost</i></h1>
                     <br />
                     <center>
                     <p style={{fontSize: "20px"}}>An expense tracking / managing <br /> application.</p>
