@@ -106,14 +106,14 @@ public class UsersController {
         if(tempUser.isPresent() && tempFriend.isPresent() && !userId.equals(friendId)) {
             Users user = tempUser.get();
             Users friend = tempFriend.get();
-            if(user.getFriendsList(usersRepository).contains(friend)) {
+            if(user.getDetailedFriendsList(usersRepository).contains(friend)) {
                 throw new AlreadyAFriendException();
             }
             UserFriends newFriend = new UserFriends(user, friendId);
             userFriendsRepository.save(newFriend);
             UserFriends reverseFriendship = new UserFriends(friend, userId);
             userFriendsRepository.save(reverseFriendship);
-            return user.getFriendsList(usersRepository);
+            return user.getDetailedFriendsList(usersRepository);
         }
         else {
             throw new BadRequestException();
@@ -126,7 +126,7 @@ public class UsersController {
         Optional<Users> tempUser = usersRepository.findById(userId);
         if(tempUser.isPresent()) {
             Users user = tempUser.get();
-            return user.getFriendsList(usersRepository);
+            return user.getDetailedFriendsList(usersRepository);
         }
         else {
             throw new BadRequestException();
