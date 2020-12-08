@@ -21,9 +21,9 @@ function Main() {
                  style={{fontSize:"20px",border:"none",outline:"none"}}><i className="link"><Link to="/register">Sign Up</Link></i></button></span>
             </center>
         </div>
-        <div style={{fontSize:"20px",color:"white"}}>
-            <i style={{fontSize:"30px",color:"white"}}> <b><center>PartyHost</center></b></i><br/>
-   <center>An expense tracking / managing <br/>application.</center>
+        <div>
+            <i style={{fontSize:"40px",color:"white"}}> <b><center>PartyHost</center></b></i><br/>
+   <center style={{marginTop:"-30px",fontSize:"20px",color:"white"}}>An expense tracking / managing <br/>application.</center>
 </div>
         </div>
     )

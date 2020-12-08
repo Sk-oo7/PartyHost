@@ -13,6 +13,159 @@
   animation: slide-open 1s forwards;
   z-index: 1;
 }
+#center_alert,
+#center_alert2 {
+  padding: 20px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  width: 30vw;
+  position: absolute;
+  outline: none;
+  z-index: 100;
+  margin-left: 35vw;
+  margin-top: 25vh;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  height: 30vh;
+}
+#center_alert2 {
+  height: 40vh;
+  margin-top: 20vh;
+}
+.center_alert_input {
+  margin-top: 25px;
+  outline: none;
+  width: 80%;
+  border: 0px;
+  background-color: rgb(211, 211, 211);
+  padding-left: 15px;
+  padding-right: 5px;
+  height: 30px;
+}
+.center_alert_input2 {
+  margin-top: 33px;
+  outline: none;
+  width: 40%;
+  margin-right: 10px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: rgb(211, 211, 211);
+  border: 0px;
+  padding-left: 15px;
+}
+.center_alert_input3 {
+  padding-left: 15px;
+  width: 87%;
+  outline: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: rgb(211, 211, 211);
+  border: 0px;
+}
+.center_alert_head {
+  outline: none;
+  font-size: 24px;
+}
+#close1,
+#close2 {
+  width: 30px;
+  height: 30px;
+  outline: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+.center_alert_submit {
+  margin-top: 7px;
+  background-color: #e94646;
+  border: 0px;
+  padding: 10px;
+  color: #f1f1f1;
+  font-size: 15px;
+  outline: none;
+  border-radius: 90px;
+  width: 85%;
+  height: 40px;
+}
+
+.center_alert2_submit {
+  outline: none;
+  background-color: #e94646;
+  border: 0px;
+  padding: 5px;
+  color: #f1f1f1;
+  font-size: 15px;
+  border-radius: 40px;
+  margin-top: 10px;
+  margin-left: -6px;
+  width: 91%;
+  height: 37px;
+  cursor: pointer;
+}
+input[type="submit"]:disabled {
+  outline: none;
+  background-color: #ec6969;
+  border: 0px;
+  padding: 5px;
+  color: #534e4e;
+  font-size: 15px;
+  border-radius: 40px;
+  margin-top: 10px;
+  margin-left: -6px;
+  width: 91%;
+  height: 37px;
+  cursor: no-drop;
+}
+
+.dropbtn {
+  background-color: #4caf50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  height: 6vh;
+  margin-right: 6vw;
+}
+.username_button {
+  background: none;
+  width: 160px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content span {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content span:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
 @keyframes slide-open {
   from {
     left: -100%;
@@ -22,7 +175,7 @@
   }
 }
 .hamburger_menu.close {
-  animation: slide-closed 2s forwards;
+  animation: slide-closed 0.5s forwards;
 }
 @keyframes slide-closed {
   from {
@@ -110,10 +263,5 @@
   background: none;
   border: none;
   outline: none;
-  margin-right: 2%;
-}
-.username_button {
-  background: none;
-  width: 200px;
   margin-right: 2%;
 }

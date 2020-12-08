@@ -11,7 +11,7 @@ const HamburgerMenu = (props) => {
         setHamburgerMenuClass("hamburger_menu close")
         setTimeout(() => {
             props.close()
-        },1000)
+        },250)
     }
 
     return (

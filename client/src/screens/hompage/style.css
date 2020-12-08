@@ -1,63 +1,80 @@
 .div {
-    width: 100%;
-    overflow: hidden !important;
-    position: relative;
+  width: 100%;
+  overflow: hidden !important;
+  position: relative;
 }
 .grad {
-    color: white;
-    margin-top: 10vh;
-    height: 70vh;
-    width: 95%;
-    background-image: linear-gradient(to right, rgb(201,87,90) , rgb(38,38,38));
-    border-top-left-radius: 250px;
-    border-bottom-left-radius: 250px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-left: 5%;
-    position: relative;
-    overflow: hidden !important;
-    animation: moveout .75s forwards;
+  color: white;
+  margin-top: 10vh;
+  height: 70vh;
+  width: 95%;
+  background-image: linear-gradient(
+    to right,
+    rgb(201, 87, 90),
+    rgb(38, 38, 38)
+  );
+  border-top-left-radius: 250px;
+  border-bottom-left-radius: 250px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5%;
+  position: relative;
+  overflow: hidden !important;
+  animation: moveout 0.75s forwards;
 }
 @keyframes moveout {
-    from {right: -40%;}
-    to {right: 0;}
+  from {
+    right: -40%;
+  }
+  to {
+    right: 0;
+  }
 }
 .compact {
-    color: white;
-    margin-top: 10vh;
-    height: 70vh;
-    width: 95%;
-    background-image: linear-gradient(to right, rgb(201,87,90) , rgb(38,38,38));
-    border-top-left-radius: 250px;
-    border-bottom-left-radius: 250px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-left: 5%;
-    position: relative;
-    overflow: hidden !important;
-    animation: movein 1s forwards;
+  color: white;
+  margin-top: 10vh;
+  height: 70vh;
+  width: 95%;
+  background-image: linear-gradient(
+    to right,
+    rgb(201, 87, 90),
+    rgb(38, 38, 38)
+  );
+  border-top-left-radius: 250px;
+  border-bottom-left-radius: 250px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5%;
+  position: relative;
+  overflow: hidden !important;
+  animation: movein 1s forwards;
 }
 @keyframes movein {
-    from {right: 0;}
-    to {right: -40%;}
+  from {
+    right: 0;
+  }
+  to {
+    right: -40%;
+  }
 }
-.grad_div1, .grad_div2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 45%;
+.grad_div1,
+.grad_div2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
 }
 .show_money {
-    color: black;
-    background: lightgray;
-    padding: 20px;
-    border-radius: 30px;
-    width: 320px;
-    font-size: 20px;
-    text-align: center;
+  color: black;
+  background: lightgray;
+  padding: 20px;
+  border-radius: 30px;
+  width: 320px;
+  font-size: 20px;
+  text-align: center;
 }
