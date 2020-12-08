@@ -1,9 +1,6 @@
 package com.partyhost.controller;
 
-import com.partyhost.exception.BadRequestException;
-import com.partyhost.exception.EmailPasswordDidNotMatchException;
-import com.partyhost.exception.UserAlreadyExistsException;
-import com.partyhost.exception.UserDoesNotExistException;
+import com.partyhost.exception.*;
 import com.partyhost.model.UserFriends;
 import com.partyhost.model.Users;
 import com.partyhost.repository.UserFriendsRepository;
@@ -17,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/user")
 public class UsersController {
 
     @Autowired
@@ -32,7 +29,7 @@ public class UsersController {
         return usersRepository.findAll();
     }
 
-    @PostMapping("/user/signup")
+    @PostMapping("/signup")
     public Users createUser(@RequestBody Users user) {
         List<Users> users = getAllUsers();
         for (Users tempUser: users) {
@@ -43,7 +40,7 @@ public class UsersController {
         return usersRepository.save(user);
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public Users login(@RequestBody Map<String, String> json) {
         String emailId = json.get("emailId");
         String password = json.get("password");
@@ -61,7 +58,7 @@ public class UsersController {
         throw new EmailPasswordDidNotMatchException();
     }
 
-    @PostMapping("/user/updateUserCredentials")
+    @PostMapping("/updateUserCredentials")
     public Users updateCredentials(@RequestBody Users user) {
         Optional<Users> tempUser = usersRepository.findById(user.getId());
         if(tempUser.isPresent()) {
@@ -83,7 +80,7 @@ public class UsersController {
         }
     }
 
-    @PostMapping("/user/updatePassword")
+    @PostMapping("/updatePassword")
     public Users updatePassword(@RequestBody Map<String, String> json) {
         Long id = Long.parseLong(json.get("id"));
         String password = json.get("password");
@@ -99,7 +96,7 @@ public class UsersController {
         }
     }
 
-    @PostMapping("user/addFriend")
+    @PostMapping("/addFriend")
     public List<Users> addFriend(@RequestBody Map<String, String> json) {
         Long userId = Long.parseLong(json.get("id"));
         String friendEmailId = json.get("friendEmailId");
@@ -108,25 +105,28 @@ public class UsersController {
         Optional<Users> tempFriend = usersRepository.findById(friendId);
         if(tempUser.isPresent() && tempFriend.isPresent() && !userId.equals(friendId)) {
             Users user = tempUser.get();
+            Users friend = tempFriend.get();
+            if(user.getDetailedFriendsList(usersRepository).contains(friend)) {
+                throw new AlreadyAFriendException();
+            }
             UserFriends newFriend = new UserFriends(user, friendId);
             userFriendsRepository.save(newFriend);
-            Users friend = tempFriend.get();
             UserFriends reverseFriendship = new UserFriends(friend, userId);
             userFriendsRepository.save(reverseFriendship);
-            return user.getFriendsList(usersRepository);
+            return user.getDetailedFriendsList(usersRepository);
         }
         else {
             throw new BadRequestException();
         }
     }
 
-    @PostMapping("user/friendList")
+    @PostMapping("/friendList")
     public List<Users> getFriendList(@RequestBody Map<String, String> json) {
         Long userId = Long.parseLong(json.get("id"));
         Optional<Users> tempUser = usersRepository.findById(userId);
         if(tempUser.isPresent()) {
             Users user = tempUser.get();
-            return user.getFriendsList(usersRepository);
+            return user.getDetailedFriendsList(usersRepository);
         }
         else {
             throw new BadRequestException();
