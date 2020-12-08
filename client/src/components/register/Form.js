@@ -51,7 +51,7 @@ function Form() {
             password:password
         }
 
-        Axios.post("http://localhost:8080/api/v1/user/signup",
+        Axios.post("http://localhost:8080/api/user/signup",
         data,{
             headers:{
                 "Content-Type":"application/json",
