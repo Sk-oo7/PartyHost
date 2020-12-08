@@ -5,6 +5,9 @@ import HamburgerMenu from "./HamburgerMenu";
 import img from "./user.png";
 
 import "./styles.css";
+import Axios from "axios";
+import { Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 function MainPage() {
   const [userexists, setUserexists] = useState(false);
@@ -12,6 +15,14 @@ function MainPage() {
   const [toggle, setToggle] = useState(false);
   const [showAddfrnd, setAddfriend] = useState(false);
   const [showEditProfile, setEditProfile] = useState(false);
+  const [editFirstName,setFirstName]=useState(JSON.parse(localStorage.getItem("user"))?.firstName);
+  const [editLastName,setLastName]=useState(JSON.parse(localStorage.getItem("user"))?.lastName);
+  const [editNumber,setNumber]=useState(JSON.parse(localStorage.getItem("user"))?.mobileNumber);
+  const [addFriend,setAddFriend]=useState("");
+  const [success,setSuccess]=useState("");
+  const [successAlert,setSuccessalert]=useState(false);
+  const [disabled,setDisabled]=useState(true);
+
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -24,6 +35,46 @@ function MainPage() {
     setToggle(false);
   };
 
+  const signout = () =>{
+    localStorage.clear();
+    window.location.reload(true);
+  }
+
+  const submitProfile=()=>{
+    const data={
+      id:JSON.parse(localStorage.getItem("user")).id,
+      firstName:editFirstName !== JSON.parse(localStorage.getItem("user")).firstName? editFirstName : null,
+      lastName:editLastName !== JSON.parse(localStorage.getItem("user")).lastName? editLastName : null,
+      mobileNumber:editNumber !== JSON.parse(localStorage.getItem("user")).mobileNumber? editNumber : null
+    }
+
+    Axios.post("http://localhost:8080/api/v1/user/updateUserCredentials",
+    data,{
+      headers:{
+        "Content-Type":"application/json",
+    }
+    })
+    .then(res=>res.data)
+    .then(data=>{
+      if(data.error){
+          setError(data.error)
+          setErroralert(true)
+      }
+      else{
+          localStorage.setItem("user",JSON.stringify(data))
+          setEditProfile(false)
+          setAddfriend(false)
+          setSuccess("Successfully Updated Credentials")
+          setSuccessalert(true)
+          setDisabled(true)
+      }
+    })
+    .catch(err=>{
+      console.log(err.response.data.message);
+      setError(err.response.data.message)
+      setErroralert(true)
+    })
+  }
 
   return (
     <div>
@@ -33,31 +84,31 @@ function MainPage() {
           <img src="close_icon.png" id="close1" onClick={()=>setAddfriend(false)} />
           <form>
           <center><input type="textbox" className="center_alert_input" style={{borderRadius:"40px"}}
-          placeholder="Type to Search" required/></center>
+          placeholder="Type to Search" onChange={(e)=>setAddFriend(e.target.value)} value={addFriend} required/></center>
           <br/>
-          <center><input  className="center_alert_submit" style={{borderRadius:"40px"}}type="submit" value="Add Friend"/></center>
+          <center><input className="center_alert_submit" style={{borderRadius:"40px"}} type="submit" value="Add Friend"/></center>
 
           </form>
           <br/>
         </div>}
 
       {showEditProfile && userexists &&  <div id="center_alert2" >
-                
         <span style={{position:"relative"}}><center className="center_alert_head">Edit Profile</center></span>
-        <img src="close_icon.png" id="close2" onClick={()=>setEditProfile(false)}/>
-        <form>
+        <img src="close_icon.png" id="close2" onClick={()=>{setEditProfile(false),setDisabled(true),setFirstName(JSON.parse(localStorage.getItem("user"))?.firstName),setLastName(JSON.parse(localStorage.getItem("user"))?.lastName),setNumber(JSON.parse(localStorage.getItem("user"))?.mobileNumber)}}/>
+        <form onSubmit={(e)=>e.preventDefault()}>
         <center>
-            <input type="textbox" className="center_alert_input2" placeholder="  First Name" style={{borderRadius:"20px"}}required/>
-        <input type="textbox" className="center_alert_input2" placeholder="  Last Name" style={{borderRadius:"20px"}}required/>
+            <input type="textbox"  onChange={(e)=>{setFirstName(e.target.value), setDisabled(false)}} value={editFirstName} className="center_alert_input2" placeholder="  First Name" style={{borderRadius:"20px"}}required/>
+        <input type="textbox"  onChange={(e)=>{setLastName(e.target.value), setDisabled(false)}} value={editLastName} className="center_alert_input2" placeholder="  Last Name" style={{borderRadius:"20px"}}required/>
         </center>
         <br/>
-        <center><input  className="center_alert_input3"style={{borderRadius:"20px",border:"0px"}} type="textbox" placeholder="  Change phone number" required/></center>
+        <center><input  onChange={(e)=>{setNumber(e.target.value), setDisabled(false)}} value={editNumber} className="center_alert_input3"style={{borderRadius:"20px",border:"0px"}} type="textbox" placeholder="  Change phone number" required/></center>
         <br/>
-        <center><input  className="center_alert2_submit"style={{borderRadius:"20px"}} type="submit" value="Add Friend"/></center>
+        <center><input disabled={disabled} className="center_alert2_submit" style={{borderRadius:"20px"}} type="submit" onClick={()=>submitProfile()} value="Submit"/></center>
 
         </form>
         <br/>
         </div>}
+
       <div className="navbar">
         <button className="hamburger_button" onClick={() => setToggle(!toggle)}>
           <img src="hamburger_icon.png" className="hamburger_icon" />
@@ -76,7 +127,7 @@ function MainPage() {
           <div className="dropdown-content">
             <span onClick={()=>setAddfriend(true)} id="main_add_friend">Add Friend</span>
             <span  onClick={()=>setEditProfile(true)} >Edit Profile</span>
-            <span>Sign-Out</span>
+            <span onClick={()=>signout()}>Sign-Out</span>
           </div>
         </div>}
         {!userexists && <button className="username_button"  style={{height:"45px",marginRight:"112px"}}>
@@ -106,6 +157,11 @@ function MainPage() {
         />
       )}
       {!userexists && <StartPage />}
+      <Snackbar open={successAlert} autoHideDuration={2000} onClose={()=>setSuccessalert(false)} >
+                <Alert severity="success" onClose={()=>setSuccessalert(false)}>
+                    {success}
+                </Alert>
+            </Snackbar>
     </div>
   );
 }
