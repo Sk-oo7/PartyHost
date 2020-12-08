@@ -78,7 +78,7 @@
 }
 .center_alert_submit {
   margin-top: 7px;
-  background-color: rgb(233, 70, 70);
+  background-color: #e94646;
   border: 0px;
   padding: 10px;
   color: #f1f1f1;
@@ -91,7 +91,7 @@
 
 .center_alert2_submit {
   outline: none;
-  background-color: rgb(233, 70, 70);
+  background-color: #e94646;
   border: 0px;
   padding: 5px;
   color: #f1f1f1;
@@ -101,6 +101,21 @@
   margin-left: -6px;
   width: 91%;
   height: 37px;
+  cursor: pointer;
+}
+input[type="submit"]:disabled {
+  outline: none;
+  background-color: #ec6969;
+  border: 0px;
+  padding: 5px;
+  color: #534e4e;
+  font-size: 15px;
+  border-radius: 40px;
+  margin-top: 10px;
+  margin-left: -6px;
+  width: 91%;
+  height: 37px;
+  cursor: no-drop;
 }
 
 .dropbtn {
