@@ -8,6 +8,7 @@ import "./styles.css";
 import Axios from "axios";
 import { Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { Link } from "react-router-dom";
 
 function MainPage() {
   const [userexists, setUserexists] = useState(false);
@@ -109,6 +110,7 @@ function MainPage() {
           setSuccess("Successfully Added Friend")
           setSuccessalert(true)
           setDisabled(true)
+          setFriend("")
       }
     })
     .catch(err=>{
@@ -174,7 +176,7 @@ function MainPage() {
         {!userexists && <button className="username_button"  style={{height:"45px",marginRight:"112px"}}>
             <img style={{ height: "25px", float: "left" }} src={img} />
             <b style={{ position: "relative", top: "5px", left: "-5px" }}>
-              {userexists ? user?.firstName + " " + user?.lastName : "Username"}
+              {userexists ? user?.firstName + " " + user?.lastName : <><Link to="/login">Sign In</Link> / <Link to="/register">Sign Up</Link></>}
             </b>
           </button>}
       </div>
