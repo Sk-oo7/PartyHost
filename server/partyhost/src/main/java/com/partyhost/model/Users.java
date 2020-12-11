@@ -78,6 +78,15 @@ public class Users {
         return this.password.equals(password);
     }
 
+    public UserFriends getFriendshipDetail(Long friendId) {
+        for (UserFriends userFriends: userFriendsList) {
+            if(friendId.equals(userFriends.getFriendId())) {
+                return userFriends;
+            }
+        }
+        return null;
+    }
+
     public List<Users> getDetailedFriendsList(UsersRepository usersRepository) {
         List<Users> list = new LinkedList<>();
         for (UserFriends userFriends: userFriendsList) {

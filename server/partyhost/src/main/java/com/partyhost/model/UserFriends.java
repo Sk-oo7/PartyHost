@@ -18,6 +18,9 @@ public class UserFriends {
     @Column(name = "friend_id")
     private Long friendId;
 
+    @Column(name = "amount_due")
+    private Double amountDue = 0.00;
+
     public UserFriends() {}
 
     public UserFriends(Users users, Long friendId) {
@@ -25,16 +28,8 @@ public class UserFriends {
         this.friendId = friendId;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Users getUsers() {
-        return users;
     }
 
     public void setUsers(Users users) {
@@ -47,6 +42,14 @@ public class UserFriends {
 
     public void setFriendId(Long friendId) {
         this.friendId = friendId;
+    }
+
+    public Double getAmountDue() {
+        return amountDue;
+    }
+
+    public void modifyAmountDue(Double amount) {
+        amountDue += amount;
     }
 
 }
