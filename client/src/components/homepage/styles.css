@@ -193,9 +193,9 @@ input[type="submit"]:disabled {
 .close_icon {
   height: 40px;
   width: 40px;
-  /* margin-right: 50%; */
-  /* margin-left: -50%; */
-  /* z-index: 99; */
+  position: absolute;
+  left: 100px;
+  top: 75px;
 }
 .friends_list {
   height: 55%;

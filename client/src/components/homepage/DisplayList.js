@@ -4,6 +4,7 @@ import axios from "axios"
 function DisplayList() {
 
     const [friendsName,setFriendsName]=useState([]);
+    const [status,setStatus]=useState([]);
     const data = {
         id:JSON.parse(localStorage.getItem("user"))?.id
     }
@@ -19,16 +20,16 @@ function DisplayList() {
         .then(value=>setFriendsName(value))
     }, [])
 
-    const status = [
-        {
-            id:"2",
-            money:"0"
-        },
-        {
-            id:"8",
-            money:"-54.050"
-        }
-    ];
+    useEffect(() => {
+        axios.post("http://localhost:8080/api/user/getFriendsAmount",
+        data,{
+            headers:{
+                "Content-Type":"application/json",
+            }
+        })
+        .then(res=>res.data)
+        .then(value=>setStatus(value))
+    }, [])
 
     const len = friendsName.length-1
     let money = ""
@@ -40,8 +41,8 @@ function DisplayList() {
                    
                     <div key={index}>
                         {status.map(info=>{
-                        if(info.id == friendName.id)
-                            money = info.money
+                        if(info.friendId == friendName.id)
+                            money = info.amountDue
                         })}
                         <div className="friends_name" style={{overflowY: len < 4 ? 'hidden' : 'scroll'}}>
                             <p className="friends_icon"><i>{friendName.firstName.charAt(0)}</i></p>
@@ -49,7 +50,7 @@ function DisplayList() {
                                 <p><b>{friendName.firstName} {friendName.lastName}</b></p>
                                 {money > 0 && <p className="owes_you">Owes you <b>₹ {money}</b></p>}
                                 {money < 0 && <p className="you_owe">You Owe <b>₹ {-money}</b></p>}
-                                {money === "0" && <p className="settled_up">Settled Up</p>}
+                                {money === 0 && <p className="settled_up">Settled Up</p>}
                             </div>
                         </div>
                         
