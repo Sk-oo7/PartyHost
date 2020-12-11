@@ -34,7 +34,7 @@ function Form() {
             password:password
         }
 
-        axios.post("http://localhost:8080/api/v1/user/login",
+        axios.post("http://localhost:8080/api/user/login",
         data,{
         headers:{
                     "Content-Type":"application/json",

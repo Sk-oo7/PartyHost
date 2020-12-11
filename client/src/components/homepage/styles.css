@@ -193,8 +193,9 @@ input[type="submit"]:disabled {
 .close_icon {
   height: 40px;
   width: 40px;
-  margin-right: 50%;
-  margin-left: -50%;
+  /* margin-right: 50%; */
+  /* margin-left: -50%; */
+  /* z-index: 99; */
 }
 .friends_list {
   height: 55%;
@@ -213,7 +214,7 @@ input[type="submit"]:disabled {
   padding: 5px;
 }
 .friends_icon {
-  border: 2px solid gray;
+  border: 2px solid rgb(107, 105, 105);
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -221,7 +222,12 @@ input[type="submit"]:disabled {
   justify-content: center;
   align-items: center;
   margin-right: 5%;
-  font-size: 30px;
+  font-size: 40px;
+  color: gray;
+  padding: 10px;
+}
+.friends_info {
+  font-size: 25px;
 }
 .add_expense {
   border: none;
@@ -264,4 +270,13 @@ input[type="submit"]:disabled {
   border: none;
   outline: none;
   margin-right: 2%;
+}
+.owes_you {
+  color: rgb(28, 190, 114);
+}
+.you_owe {
+  color: #e75a5a;
+}
+.settled_up {
+  color: gray;
 }

@@ -8,6 +8,7 @@ import "./styles.css";
 import Axios from "axios";
 import { Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { Link } from "react-router-dom";
 
 function MainPage() {
   const [userexists, setUserexists] = useState(false);
@@ -18,10 +19,13 @@ function MainPage() {
   const [editFirstName,setFirstName]=useState(JSON.parse(localStorage.getItem("user"))?.firstName);
   const [editLastName,setLastName]=useState(JSON.parse(localStorage.getItem("user"))?.lastName);
   const [editNumber,setNumber]=useState(JSON.parse(localStorage.getItem("user"))?.mobileNumber);
-  const [addFriend,setAddFriend]=useState("");
+  const [addFriend,setFriend]=useState("");
   const [success,setSuccess]=useState("");
   const [successAlert,setSuccessalert]=useState(false);
   const [disabled,setDisabled]=useState(true);
+  const [disabled2,setDisabled2]=useState(true);
+  const [error,setError]=useState("");
+  const [errAlert,setErroralert]=useState(false);
 
 
   useEffect(() => {
@@ -48,7 +52,7 @@ function MainPage() {
       mobileNumber:editNumber !== JSON.parse(localStorage.getItem("user")).mobileNumber? editNumber : null
     }
 
-    Axios.post("http://localhost:8080/api/v1/user/updateUserCredentials",
+    Axios.post("http://localhost:8080/api/user/updateUserCredentials",
     data,{
       headers:{
         "Content-Type":"application/json",
@@ -76,17 +80,56 @@ function MainPage() {
     })
   }
 
+  const submitFriend=()=>{
+
+    if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(addFriend)){
+      setError("Invalid email address")
+      setErroralert(true)
+      return
+  }
+    const data={
+      id:JSON.parse(localStorage.getItem("user")).id,
+      friendEmailId:addFriend
+    }
+
+    Axios.post("http://localhost:8080/api/user/addFriend",
+    data,{
+      headers:{
+        "Content-Type":"application/json",
+    }
+    })
+    .then(res=>res.data)
+    .then(data=>{
+      if(data.error){
+          setError(data.error)
+          setErroralert(true)
+      }
+      else{
+          setEditProfile(false)
+          setAddfriend(false)
+          setSuccess("Successfully Added Friend")
+          setSuccessalert(true)
+          setDisabled(true)
+          setFriend("")
+      }
+    })
+    .catch(err=>{
+      console.log(err.response.data.message);
+      setError(err.response.data.message)
+      setErroralert(true)
+    })
+  }
+
   return (
     <div>
         {showAddfrnd && userexists && <div id="center_alert" >
                   
           <span style={{position:"relative"}}><center className="center_alert_head">Add Friend</center></span>
-          <img src="close_icon.png" id="close1" onClick={()=>setAddfriend(false)} />
-          <form>
+          <img src="close_icon.png" id="close1" onClick={()=>{setAddfriend(false),setDisabled2(true),setFriend("")}} />
+          <form onSubmit={(e)=>e.preventDefault()}>
           <center><input type="textbox" className="center_alert_input" style={{borderRadius:"40px"}}
-          placeholder="Type to Search" onChange={(e)=>setAddFriend(e.target.value)} value={addFriend} required/></center>
-          <br/>
-          <center><input className="center_alert_submit" style={{borderRadius:"40px"}} type="submit" value="Add Friend"/></center>
+          placeholder="Type to Search" onChange={(e)=>{setFriend(e.target.value), setDisabled2(false)}} value={addFriend} required/></center>
+          <center><input disabled={disabled2} onClick={()=>submitFriend()} className="center_alert_submit" style={{borderRadius:"40px"}} type="submit" value="Add Friend"/></center>
 
           </form>
           <br/>
@@ -125,15 +168,15 @@ function MainPage() {
             </b>
           </button>
           <div className="dropdown-content">
-            <span onClick={()=>setAddfriend(true)} id="main_add_friend">Add Friend</span>
-            <span  onClick={()=>setEditProfile(true)} >Edit Profile</span>
+            <span onClick={()=>{setAddfriend(true),setEditProfile(false)}} id="main_add_friend">Add Friend</span>
+            <span  onClick={()=>{setEditProfile(true),setAddfriend(false)}} >Edit Profile</span>
             <span onClick={()=>signout()}>Sign-Out</span>
           </div>
         </div>}
         {!userexists && <button className="username_button"  style={{height:"45px",marginRight:"112px"}}>
             <img style={{ height: "25px", float: "left" }} src={img} />
             <b style={{ position: "relative", top: "5px", left: "-5px" }}>
-              {userexists ? user?.firstName + " " + user?.lastName : "Username"}
+              {userexists ? user?.firstName + " " + user?.lastName : <><Link to="/login">Sign In</Link> / <Link to="/register">Sign Up</Link></>}
             </b>
           </button>}
       </div>
@@ -157,9 +200,14 @@ function MainPage() {
         />
       )}
       {!userexists && <StartPage />}
-      <Snackbar open={successAlert} autoHideDuration={2000} onClose={()=>setSuccessalert(false)} >
+            <Snackbar open={successAlert} autoHideDuration={2000} onClose={()=>setSuccessalert(false)} >
                 <Alert severity="success" onClose={()=>setSuccessalert(false)}>
                     {success}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={errAlert} autoHideDuration={2000} onClose={()=>setErroralert(false)}>
+                <Alert severity="error" onClose={()=>setErroralert(false)} >
+                    {error}
                 </Alert>
             </Snackbar>
     </div>
