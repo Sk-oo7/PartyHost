@@ -133,6 +133,19 @@ public class UsersController {
         }
     }
 
+    @PostMapping("/getFriendsAmount")
+    public List<UserFriends> getFriendAmounts(@RequestBody Map<String, String> json) {
+        Long userId = Long.parseLong(json.get("id"));
+        Optional<Users> tempUser = usersRepository.findById(userId);
+        if(tempUser.isPresent()) {
+            Users user = tempUser.get();
+            return user.fetchFriendsAmountList();
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
     public class UsersControllerFunctions {
 
         public Long findIdByEmail(String emailId) {

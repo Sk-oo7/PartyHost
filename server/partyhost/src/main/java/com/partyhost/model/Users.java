@@ -87,6 +87,10 @@ public class Users {
         return null;
     }
 
+    public List<UserFriends> fetchFriendsAmountList() {
+        return userFriendsList;
+    }
+
     public List<Users> getDetailedFriendsList(UsersRepository usersRepository) {
         List<Users> list = new LinkedList<>();
         for (UserFriends userFriends: userFriendsList) {
