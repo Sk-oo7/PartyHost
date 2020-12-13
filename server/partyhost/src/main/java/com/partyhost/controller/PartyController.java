@@ -49,12 +49,18 @@ public class PartyController {
                 }
             }
             else {
+                String divideBy = json.get("divideBy");
                 String friendsAmountString = json.get("friendsAmount");
                 friendsAmountString = friendsAmountString.substring(1, friendsAmountString.length() - 1);
                 String[] friendsAmountStringArray = friendsAmountString.split(",");
                 List<Long> friendsAmountArray = new ArrayList<>(friendsAmountStringArray.length);
                 for (String friendId: friendsAmountStringArray) {
                     friendsAmountArray.add(Long.parseLong(friendId));
+                }
+                if(divideBy.equals("percent")) {
+                    for (int i = 0; i < friendsAmountArray.size(); i++) {
+                        friendsAmountArray.set(i, ((long) (friendsAmountArray.get(i) * amount) / 100));
+                    }
                 }
                 for (int i = 0; i < friendsArray.size(); i++) {
                     partyAmountDue += partyControllerFunctions.addDueAmountToFriends(user, userId, friendsArray.get(i), friendsAmountArray.get(i));
