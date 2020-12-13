@@ -26,7 +26,7 @@ const HamburgerMenu = (props) => {
             <div className="header">
                 <img src="close_icon.png" className="close_icon" onClick={closeHandler}/>
                 {userexists && <h1>F.R.I.E.N.D.S</h1>}
-                {!userexists && <div><img src="friends_icon.png" style={{height: "500px" , width: "500px", marginBottom:"100px", border: "2px solid black"}} /></div>}
+                {!userexists && <div><img src="friends_icon.png" style={{height: "500px" , width: "500px"}} /></div>}
             </div>
             <DisplayList />
             <br /><br />
