@@ -13,6 +13,18 @@
   animation: slide-open 1s forwards;
   z-index: 1;
 }
+.add_exp {
+  box-shadow: 1px 0px 5px;
+  background-color: white;
+  width: 60vw;
+  height: 60vh;
+  border-radius: 15px;
+  margin: 100px;
+  padding: 20px;
+  margin-left: 300px;
+  position: absolute;
+}
+
 #center_alert,
 #center_alert2 {
   padding: 20px;
@@ -226,6 +238,20 @@ input[type="submit"]:disabled {
   color: gray;
   padding: 10px;
 }
+.friends_icon2 {
+  border: 1px solid rgb(107, 105, 105);
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 4%;
+  font-size: 20px;
+  color: gray;
+  padding: 8px;
+  padding-right: 10px;
+}
 .friends_info {
   font-size: 25px;
 }
@@ -238,6 +264,7 @@ input[type="submit"]:disabled {
   width: 220px;
   height: 55px;
   font-size: 20px;
+  padding-left: 20px;
 }
 .navbar {
   display: flex;
@@ -254,6 +281,7 @@ input[type="submit"]:disabled {
 .hamburger_icon {
   height: 25px;
   width: 30px;
+  margin-left: -150px;
 }
 .home_button {
   border: none;
@@ -279,4 +307,12 @@ input[type="submit"]:disabled {
 }
 .settled_up {
   color: gray;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input {
+  outline: none;
 }

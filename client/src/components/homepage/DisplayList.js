@@ -8,6 +8,7 @@ function DisplayList() {
     const data = {
         id:JSON.parse(localStorage.getItem("user"))?.id
     }
+    const[userexist]=useState(JSON.parse(localStorage.getItem("user")))
 
     useEffect(() => {
         axios.post("http://localhost:8080/api/user/friendList",
@@ -33,10 +34,11 @@ function DisplayList() {
 
     const len = friendsName.length-1
     let money = ""
-    
+
     return (
-        <div className="friends_list" style={{overflowY: len < 4 ? 'hidden' : 'scroll'}}>
+        <div className="friends_list" style={{overflowY: len < 4 ? 'hidden' : 'scroll',marginTop:"100px"}}>
             <div>
+                {userexist && friendsName.length === 0 && <center><h2 style={{color:"gray"}}>You don't have any friend right now Please add friends to get started</h2></center>}
                 {friendsName.map((friendName,index) =>(
                    
                     <div key={index}>
@@ -44,7 +46,7 @@ function DisplayList() {
                         if(info.friendId == friendName.id)
                             money = info.amountDue
                         })}
-                        <div className="friends_name" style={{overflowY: len < 4 ? 'hidden' : 'scroll'}}>
+                        <div className="friends_name">
                             <p className="friends_icon"><i>{friendName.firstName.charAt(0)}</i></p>
                             <div className="friends_info">
                                 <p><b>{friendName.firstName} {friendName.lastName}</b></p>
