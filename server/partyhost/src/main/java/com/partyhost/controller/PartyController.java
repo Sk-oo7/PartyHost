@@ -1,10 +1,14 @@
 package com.partyhost.controller;
 
 import com.partyhost.exception.BadRequestException;
-import com.partyhost.model.UserFriends;
-import com.partyhost.model.Users;
-import com.partyhost.repository.UserFriendsRepository;
-import com.partyhost.repository.UsersRepository;
+import com.partyhost.model.party.PartyDetails;
+import com.partyhost.model.party.PartyFriendsLink;
+import com.partyhost.model.users.UserFriends;
+import com.partyhost.model.users.Users;
+import com.partyhost.repository.party.PartyDetailsRepository;
+import com.partyhost.repository.party.PartyFriendsLinkRepository;
+import com.partyhost.repository.users.UserFriendsRepository;
+import com.partyhost.repository.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,29 +27,39 @@ public class PartyController {
     @Autowired
     private UserFriendsRepository userFriendsRepository;
 
+    @Autowired
+    private PartyDetailsRepository partyDetailsRepository;
+
+    @Autowired
+    private PartyFriendsLinkRepository partyFriendsLinkRepository;
+
     private final PartyControllerFunctions partyControllerFunctions = new PartyControllerFunctions();
 
     @PostMapping("/createParty")
     public Object createParty(@RequestBody Map<String, String> json) {
-        Long userId = Long.parseLong(json.get("id"));
+        UUID userId = UUID.fromString(json.get("id"));
         Optional<Users> tempUser = usersRepository.findById(userId);
         if(tempUser.isPresent()) {
             Users user = tempUser.get();
             double amount = Double.parseDouble(json.get("amount"));
             boolean splitEqually = Boolean.parseBoolean(json.get("splitEqually"));
+            PartyDetails partyDetails = new PartyDetails(userId, amount, splitEqually);
             String friendsString = json.get("friends");
             friendsString = friendsString.substring(1, friendsString.length() - 1);
             String[] friendsStringArray = friendsString.split(",");
-            List<Long> friendsArray = new ArrayList<>(friendsStringArray.length);
+            List<UUID> friendsArray = new ArrayList<>(friendsStringArray.length);
             for (String friendId: friendsStringArray) {
-                friendsArray.add(Long.parseLong(friendId));
+                friendsArray.add(UUID.fromString(friendId));
             }
             double partyAmountDue = 0;
             if(splitEqually) {
                 double amountPerPerson = amount/(friendsArray.size() + 1);
                 partyAmountDue = amount - amountPerPerson;
-                for (Long friendId : friendsArray) {
+                partyDetailsRepository.save(partyDetails);
+                for (UUID friendId : friendsArray) {
                     partyControllerFunctions.addDueAmountToFriends(user, userId, friendId, amountPerPerson);
+                    PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendId, amountPerPerson);
+                    partyFriendsLinkRepository.save(partyFriendsLink);
                 }
             }
             else {
@@ -53,19 +67,25 @@ public class PartyController {
                 String friendsAmountString = json.get("friendsAmount");
                 friendsAmountString = friendsAmountString.substring(1, friendsAmountString.length() - 1);
                 String[] friendsAmountStringArray = friendsAmountString.split(",");
-                List<Long> friendsAmountArray = new ArrayList<>(friendsAmountStringArray.length);
+                List<Double> friendsAmountArray = new ArrayList<>(friendsAmountStringArray.length);
                 for (String friendId: friendsAmountStringArray) {
-                    friendsAmountArray.add(Long.parseLong(friendId));
+                    friendsAmountArray.add(Double.parseDouble(friendId));
                 }
                 if(divideBy.equals("percent")) {
                     for (int i = 0; i < friendsAmountArray.size(); i++) {
-                        friendsAmountArray.set(i, ((long) (friendsAmountArray.get(i) * amount) / 100));
+                        friendsAmountArray.set(i, ((friendsAmountArray.get(i) * amount) / 100));
                     }
                 }
+                partyDetailsRepository.save(partyDetails);
                 for (int i = 0; i < friendsArray.size(); i++) {
                     partyAmountDue += partyControllerFunctions.addDueAmountToFriends(user, userId, friendsArray.get(i), friendsAmountArray.get(i));
+                    PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendsArray.get(i), friendsAmountArray.get(i));
+                    partyFriendsLinkRepository.save(partyFriendsLink);
                 }
+
             }
+            PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, userId, amount - partyAmountDue);
+            partyFriendsLinkRepository.save(partyFriendsLink);
             return null;
         }
         else {
@@ -74,7 +94,7 @@ public class PartyController {
     }
 
     private class PartyControllerFunctions {
-        private double addDueAmountToFriends(Users user, Long userId, Long friendId, double amount) {
+        private double addDueAmountToFriends(Users user, UUID userId, UUID friendId, double amount) {
             UserFriends friendship = user.getFriendshipDetail(friendId);
             if(friendship != null) {
                 friendship.modifyAmountDue(amount);
