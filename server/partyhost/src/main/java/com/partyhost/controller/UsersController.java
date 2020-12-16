@@ -147,6 +147,23 @@ public class UsersController {
         }
     }
 
+    @PostMapping("/getDueAmount")
+    public Double getDueAmount(@RequestBody Map<String, String> json) {
+        UUID userId = UUID.fromString(json.get("id"));
+        Optional<Users> tempUser = usersRepository.findById(userId);
+        if(tempUser.isPresent()) {
+            Users user = tempUser.get();
+            double amountDue = 0;
+            for(UserFriends userFriends : user.fetchFriendsAmountList()) {
+                amountDue += userFriends.getAmountDue();
+            }
+            return amountDue;
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
     public class UsersControllerFunctions {
 
         public UUID findIdByEmail(String emailId) {
