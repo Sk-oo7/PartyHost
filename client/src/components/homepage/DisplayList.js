@@ -50,8 +50,8 @@ function DisplayList() {
                             <p className="friends_icon">{friendName.firstName.toUpperCase().charAt(0)}</p>
                             <div className="friends_info">
                                 <p><b>{friendName.firstName} {friendName.lastName}</b></p>
-                                {money > 0 && <p className="owes_you">Owes you <b>₹ {money}</b></p>}
-                                {money < 0 && <p className="you_owe">You Owe <b>₹ {-money}</b></p>}
+                                {money > 0 && <p className="owes_you">Owes you <b>₹ {parseFloat(money).toFixed(2)}</b></p>}
+                                {money < 0 && <p className="you_owe">You Owe <b>₹ {parseFloat(-money).toFixed(2)}</b></p>}
                                 {money === 0 && <p className="settled_up">Settled Up</p>}
                             </div>
                         </div>
