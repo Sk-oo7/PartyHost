@@ -47,7 +47,7 @@ function DisplayList() {
                             money = info.amountDue
                         })}
                         <div className="friends_name">
-                            <p className="friends_icon"><i>{friendName.firstName.charAt(0)}</i></p>
+                            <p className="friends_icon">{friendName.firstName.toUpperCase().charAt(0)}</p>
                             <div className="friends_info">
                                 <p><b>{friendName.firstName} {friendName.lastName}</b></p>
                                 {money > 0 && <p className="owes_you">Owes you <b>₹ {money}</b></p>}

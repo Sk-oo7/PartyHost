@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link,useHistory } from 'react-router-dom'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -18,6 +18,11 @@ function Form() {
     const [success,setSuccess]=useState("");
     const [errAlert,setErroralert]=useState(false);
     const [successAlert,setSuccessalert]=useState(false);
+
+    useEffect(() => {
+        if(JSON.parse(localStorage.getItem("user")) !== null)
+        history.push("/")
+    }, [])
 
     const postData=()=>{
         if(firstname ==="" || lastname === "" || email === "" || password === "" || cpassword === ""){
