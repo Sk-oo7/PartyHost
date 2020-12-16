@@ -49,7 +49,7 @@ public class PartyController {
             String[] friendsStringArray = friendsString.split(",");
             List<UUID> friendsArray = new ArrayList<>(friendsStringArray.length);
             for (String friendId: friendsStringArray) {
-                friendsArray.add(UUID.fromString(friendId));
+                friendsArray.add(UUID.fromString(friendId.substring(1, friendId.length() - 1)));
             }
             double partyAmountDue = 0;
             if(splitEqually) {
