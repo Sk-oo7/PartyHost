@@ -1,10 +1,10 @@
 package com.partyhost.controller;
 
 import com.partyhost.exception.*;
-import com.partyhost.model.UserFriends;
-import com.partyhost.model.Users;
-import com.partyhost.repository.UserFriendsRepository;
-import com.partyhost.repository.UsersRepository;
+import com.partyhost.model.users.UserFriends;
+import com.partyhost.model.users.Users;
+import com.partyhost.repository.users.UserFriendsRepository;
+import com.partyhost.repository.users.UsersRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

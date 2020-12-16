@@ -30,3 +30,24 @@ CREATE TABLE `friend_list` (
   `amount_due` double NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+Table Name = "party_details"
+
+CREATE TABLE `party_details` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `host_id` int NOT NULL,
+  `amount` int NOT NULL,
+  `split_equally` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+Table Name = "party_friends_link"
+
+CREATE TABLE `party_friends_link` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `party_id` int NOT NULL,
+  `friend_id` int NOT NULL,
+  `friend_amount` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

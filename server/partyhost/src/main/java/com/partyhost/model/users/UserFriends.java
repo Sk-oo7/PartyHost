@@ -1,4 +1,6 @@
-package com.partyhost.model;
+package com.partyhost.model.users;
+
+import com.partyhost.model.users.Users;
 
 import javax.persistence.*;
 
