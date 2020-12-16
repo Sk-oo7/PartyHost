@@ -37,7 +37,7 @@ public class PartyController {
 
     @PostMapping("/createParty")
     public Object createParty(@RequestBody Map<String, String> json) {
-        Long userId = Long.parseLong(json.get("id"));
+        UUID userId = UUID.fromString(json.get("id"));
         Optional<Users> tempUser = usersRepository.findById(userId);
         if(tempUser.isPresent()) {
             Users user = tempUser.get();
@@ -47,16 +47,16 @@ public class PartyController {
             String friendsString = json.get("friends");
             friendsString = friendsString.substring(1, friendsString.length() - 1);
             String[] friendsStringArray = friendsString.split(",");
-            List<Long> friendsArray = new ArrayList<>(friendsStringArray.length);
+            List<UUID> friendsArray = new ArrayList<>(friendsStringArray.length);
             for (String friendId: friendsStringArray) {
-                friendsArray.add(Long.parseLong(friendId));
+                friendsArray.add(UUID.fromString(friendId));
             }
             double partyAmountDue = 0;
             if(splitEqually) {
                 double amountPerPerson = amount/(friendsArray.size() + 1);
                 partyAmountDue = amount - amountPerPerson;
                 partyDetailsRepository.save(partyDetails);
-                for (Long friendId : friendsArray) {
+                for (UUID friendId : friendsArray) {
                     partyControllerFunctions.addDueAmountToFriends(user, userId, friendId, amountPerPerson);
                     PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendId, amountPerPerson);
                     partyFriendsLinkRepository.save(partyFriendsLink);
@@ -94,7 +94,7 @@ public class PartyController {
     }
 
     private class PartyControllerFunctions {
-        private double addDueAmountToFriends(Users user, Long userId, Long friendId, double amount) {
+        private double addDueAmountToFriends(Users user, UUID userId, UUID friendId, double amount) {
             UserFriends friendship = user.getFriendshipDetail(friendId);
             if(friendship != null) {
                 friendship.modifyAmountDue(amount);

@@ -1,11 +1,13 @@
 package com.partyhost.model.users;
 
 import com.partyhost.repository.users.UsersRepository;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -13,8 +15,10 @@ import java.util.Optional;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "uuid2")
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -34,7 +38,7 @@ public class Users {
     @OneToMany(mappedBy = "users")
     private List<UserFriends> userFriendsList;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -78,7 +82,7 @@ public class Users {
         return this.password.equals(password);
     }
 
-    public UserFriends getFriendshipDetail(Long friendId) {
+    public UserFriends getFriendshipDetail(UUID friendId) {
         for (UserFriends userFriends: userFriendsList) {
             if(friendId.equals(userFriends.getFriendId())) {
                 return userFriends;
@@ -94,7 +98,7 @@ public class Users {
     public List<Users> getDetailedFriendsList(UsersRepository usersRepository) {
         List<Users> list = new LinkedList<>();
         for (UserFriends userFriends: userFriendsList) {
-            Long friendId = userFriends.getFriendId();
+            UUID friendId = userFriends.getFriendId();
             Optional<Users> friend = usersRepository.findById(friendId);
             if(friend.isPresent()) {
                 list.add(friend.get());

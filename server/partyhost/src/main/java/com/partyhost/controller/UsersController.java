@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user")
@@ -82,7 +83,7 @@ public class UsersController {
 
     @PostMapping("/updatePassword")
     public Users updatePassword(@RequestBody Map<String, String> json) {
-        Long id = Long.parseLong(json.get("id"));
+        UUID id = UUID.fromString(json.get("id"));
         String password = json.get("password");
         Optional<Users> tempUser = usersRepository.findById(id);
         if(tempUser.isPresent()) {
@@ -98,10 +99,10 @@ public class UsersController {
 
     @PostMapping("/addFriend")
     public List<Users> addFriend(@RequestBody Map<String, String> json) {
-        Long userId = Long.parseLong(json.get("id"));
+        UUID userId = UUID.fromString(json.get("id"));
         String friendEmailId = json.get("friendEmailId");
         Optional<Users> tempUser = usersRepository.findById(userId);
-        Long friendId = usersControllerFunctions.findIdByEmail(friendEmailId);
+        UUID friendId = usersControllerFunctions.findIdByEmail(friendEmailId);
         Optional<Users> tempFriend = usersRepository.findById(friendId);
         if(tempUser.isPresent() && tempFriend.isPresent() && !userId.equals(friendId)) {
             Users user = tempUser.get();
@@ -122,7 +123,7 @@ public class UsersController {
 
     @PostMapping("/friendList")
     public List<Users> getFriendList(@RequestBody Map<String, String> json) {
-        Long userId = Long.parseLong(json.get("id"));
+        UUID userId = UUID.fromString(json.get("id"));
         Optional<Users> tempUser = usersRepository.findById(userId);
         if(tempUser.isPresent()) {
             Users user = tempUser.get();
@@ -135,7 +136,7 @@ public class UsersController {
 
     @PostMapping("/getFriendsAmount")
     public List<UserFriends> getFriendAmounts(@RequestBody Map<String, String> json) {
-        Long userId = Long.parseLong(json.get("id"));
+        UUID userId = UUID.fromString(json.get("id"));
         Optional<Users> tempUser = usersRepository.findById(userId);
         if(tempUser.isPresent()) {
             Users user = tempUser.get();
@@ -148,7 +149,7 @@ public class UsersController {
 
     public class UsersControllerFunctions {
 
-        public Long findIdByEmail(String emailId) {
+        public UUID findIdByEmail(String emailId) {
             List<Users> usersList = usersRepository.findAll();
             for (Users user: usersList) {
                 if(emailId.equals(user.getEmailId())) {

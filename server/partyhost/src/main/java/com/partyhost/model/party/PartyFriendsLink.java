@@ -1,40 +1,40 @@
 package com.partyhost.model.party;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "party_friends_link")
 public class PartyFriendsLink {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "uuid2")
+    @Column(name = "id", nullable = false)
+    private UUID id;
+    
     @ManyToOne
     @JoinColumn(name = "party_id")
     private PartyDetails partyDetails;
 
     @Column(name = "friend_id")
-    private Long friendId;
+    private UUID friendId;
 
     @Column(name = "friend_amount")
     private Double friendsAmount;
 
     public PartyFriendsLink() {}
 
-    public PartyFriendsLink(PartyDetails partyDetails, Long friendId, Double friendsAmount) {
+    public PartyFriendsLink(PartyDetails partyDetails, UUID friendId, Double friendsAmount) {
         this.partyDetails = partyDetails;
         this.friendId = friendId;
         this.friendsAmount = friendsAmount;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public PartyDetails getPartyDetails() {
@@ -45,11 +45,11 @@ public class PartyFriendsLink {
         this.partyDetails = partyDetails;
     }
 
-    public Long getFriendId() {
+    public UUID getFriendId() {
         return friendId;
     }
 
-    public void setFriendId(Long friendId) {
+    public void setFriendId(UUID friendId) {
         this.friendId = friendId;
     }
 

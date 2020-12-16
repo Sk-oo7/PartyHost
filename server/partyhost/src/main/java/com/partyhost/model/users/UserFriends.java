@@ -1,48 +1,46 @@
 package com.partyhost.model.users;
 
-import com.partyhost.model.users.Users;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "friend_list")
 public class UserFriends {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "uuid2")
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
 
     @Column(name = "friend_id")
-    private Long friendId;
+    private UUID friendId;
 
     @Column(name = "amount_due")
     private Double amountDue = 0.00;
 
     public UserFriends() {}
 
-    public UserFriends(Users users, Long friendId) {
+    public UserFriends(Users users, UUID friendId) {
         this.users = users;
         this.friendId = friendId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setUsers(Users users) {
         this.users = users;
     }
 
-    public Long getFriendId() {
+    public UUID getFriendId() {
         return friendId;
     }
 
-    public void setFriendId(Long friendId) {
+    public void setFriendId(UUID friendId) {
         this.friendId = friendId;
     }
 

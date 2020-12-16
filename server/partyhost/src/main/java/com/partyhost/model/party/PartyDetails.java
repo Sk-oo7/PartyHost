@@ -1,7 +1,10 @@
 package com.partyhost.model.party;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "party_details")
@@ -9,11 +12,13 @@ import java.util.List;
 public class PartyDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "uuid2")
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     @Column(name = "host_id")
-    private Long hostId;
+    private UUID hostId;
 
     @Column(name = "amount")
     private Double amount;
@@ -28,25 +33,21 @@ public class PartyDetails {
 
     }
 
-    public PartyDetails(Long hostId, Double amount, boolean splitEqually) {
+    public PartyDetails(UUID hostId, Double amount, boolean splitEqually) {
         this.hostId = hostId;
         this.amount = amount;
         this.splitEqually = splitEqually;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getHostId() {
+    public UUID getHostId() {
         return hostId;
     }
 
-    public void setHostId(Long hostId) {
+    public void setHostId(UUID hostId) {
         this.hostId = hostId;
     }
 
