@@ -17,6 +17,7 @@ const HamburgerMenu = (props) => {
     const [Amounts,setAmounts]=useState([]);
     const [Percents,setPercents]=useState([]);
     const [people,setPeople]=useState([]);
+    const [respFriends,setRespFriends]=useState([]);
     const [totalAmount,setTotalAmount]=useState(0);
     const [ownAmount,SetOwnAmount]=useState(0);
     const [error,setError]=useState("");
@@ -120,12 +121,115 @@ const HamburgerMenu = (props) => {
 
     const submitExpense=()=>{
 
-        if(isNaN(totalAmount) || totalAmount === "" || totalAmount < 0){
+        if(isNaN(totalAmount) || totalAmount === "" || totalAmount <= 0){
             return (setError("Total Amount is not valid"),setErroralert(true))
+        }
+        if(people.length === 0){
+            return (setError("Please select friends"),setErroralert(true))
+        }
+        if(divideEqualy){
+
+            const data={
+                id:JSON.parse(localStorage.getItem("user"))?.id,
+                amount:totalAmount,
+                splitEqually:"true",
+                friends:JSON.stringify(people.map(friend=>{
+                    return friend.id
+                }))
+            }
+            Axios.post("http://localhost:8080/api/party/createParty",
+            data,{
+                headers:{
+                    "Content-Type":"application/json",
+                }
+            })
+            .catch(err=>{return console.log(err)})
+            .then(res=>console.log(res),
+            setSuccess("Successfully Added Expense"),
+            setSuccessalert(true)
+            )
+            setTimeout(() => {
+                window.location.reload(false)
+            }, 1500);
+        }
+        if(!divideEqualy && divideBy === "Amount"){
+            if(people.length !== Amounts.length || ownAmount == ""){
+                return (setError("Please enter all the fields"),setErroralert(true))
+            }
+            let sum=parseInt(ownAmount)
+            Amounts.map(amt=>
+                sum+=parseInt(amt.amount))
+            if(sum != totalAmount){
+                return (setError("The payment values do not add up to the total cost of Rs."+totalAmount),setErroralert(true))
+            }
+            const data={
+                id:JSON.parse(localStorage.getItem("user"))?.id,
+                amount:totalAmount,
+                splitEqually:"false",
+                friends:JSON.stringify(Amounts.map(friend=>{
+                    return friend.id
+                })),
+                divideBy,
+                friendsAmount:JSON.stringify(Amounts.map(friend=>{
+                    return parseInt(friend.amount)
+                }))
+            }
+            Axios.post("http://localhost:8080/api/party/createParty",
+            data,{
+                headers:{
+                    "Content-Type":"application/json",
+                }
+            })
+            .catch(err=>{return console.log(err)})
+            .then(res=>console.log(res),
+            setSuccess("Successfully Added Expense"),
+            setSuccessalert(true)
+            )
+            setTimeout(() => {
+                window.location.reload(false)
+            }, 1500);
+
+        }
+        if(!divideEqualy && divideBy === "Percentage"){
+            if(people.length !== Percents.length || ownAmount == 0 || ownAmount === null){
+                return (setError("Please enter all the fields"),setErroralert(true))
+            }
+            let sum=parseInt(ownAmount)
+            Percents.map(amt=>
+                sum+=parseInt(amt.percent))
+            if(sum != 100){
+                return (setError("The payment percentage do not add up to the total 100%"),setErroralert(true))
+            }
+            const data={
+                id:JSON.parse(localStorage.getItem("user"))?.id,
+                amount:totalAmount,
+                splitEqually:"false",
+                friends:JSON.stringify(Percents.map(friend=>{
+                    return friend.id
+                })),
+                divideBy:"percent",
+                friendsAmount:JSON.stringify(Percents.map(friend=>{
+                    return parseInt(friend.percent)
+                }))
+            }
+            Axios.post("http://localhost:8080/api/party/createParty",
+            data,{
+                headers:{
+                    "Content-Type":"application/json",
+                }
+            })
+            .catch(err=>{return console.log(err)})
+            .then(res=>console.log(res),
+            setSuccess("Successfully Added Expense"),
+            setSuccessalert(true)
+            )
+            setTimeout(() => {
+                window.location.reload(false)
+            }, 1500);
+
         }
          
     }
-console.log(Amounts)
     return (
         <div className={hamburgerMenuClass}>
             <div className="header">
@@ -189,7 +293,7 @@ console.log(Amounts)
                                 <span style={{position:"absolute",top:"5px",left:"46px"}}>{JSON.parse(localStorage.getItem("user")).firstName+" (You)"} </span>
                             </span>
 
-                        {!divideEqualy && <input type="tel" maxLength="6" placeholder={divideBy} onChange={(e)=>SetOwnAmount(e.target.value)} style={{border:"0px",paddingLeft:"5px",borderBottom:"1px solid black",height:"20px",width:"100px",position:"absolute",top:"12px",left:"20vw"}} maxLength="3" />}
+                        {!divideEqualy && <input type="tel" maxLength="6" placeholder={divideBy} onChange={(e)=>SetOwnAmount(e.target.value)} style={{border:"0px",paddingLeft:"5px",borderBottom:"1px solid black",height:"20px",width:"100px",position:"absolute",top:"12px",left:"20vw"}} maxLength="6" />}
                         <span style={{position:"absolute",right:"1vw"}}>
                             Rs. {divideEqualy && parseFloat(totalAmount/(people.length+1)).toFixed(2)}
                             {!divideEqualy && divideBy === "Percentage" && (parseFloat(totalAmount*ownAmount/100).toFixed(2) === "NaN" ? parseFloat(0).toFixed(2) : parseFloat(totalAmount*ownAmount/100).toFixed(2))}
@@ -227,7 +331,7 @@ console.log(Amounts)
                     {success}
                 </Alert>
             </Snackbar>
-            <Snackbar open={errAlert} autoHideDuration={2000} onClose={()=>setErroralert(false)}>
+            <Snackbar open={errAlert} autoHideDuration={4000} onClose={()=>setErroralert(false)}>
                 <Alert severity="error" onClose={()=>setErroralert(false)} >
                     {error}
                 </Alert>
