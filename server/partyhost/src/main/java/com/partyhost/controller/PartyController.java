@@ -49,16 +49,15 @@ public class PartyController {
             String[] friendsStringArray = friendsString.split(",");
             List<UUID> friendsArray = new ArrayList<>(friendsStringArray.length);
             for (String friendId: friendsStringArray) {
-                friendsArray.add(UUID.fromString(friendId));
+                friendsArray.add(UUID.fromString(friendId.substring(1, friendId.length() - 1)));
             }
             double partyAmountDue = 0;
             if(splitEqually) {
                 double amountPerPerson = amount/(friendsArray.size() + 1);
-                partyAmountDue = amount - amountPerPerson;
                 partyDetailsRepository.save(partyDetails);
                 for (UUID friendId : friendsArray) {
-                    partyControllerFunctions.addDueAmountToFriends(user, userId, friendId, amountPerPerson);
-                    PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendId, amountPerPerson);
+                    partyAmountDue += partyControllerFunctions.addDueAmountToFriends(user, userId, friendId, ((double)(Math.round(amountPerPerson * 100)))/100);
+                    PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendId, ((double)(Math.round(amountPerPerson * 100)))/100);
                     partyFriendsLinkRepository.save(partyFriendsLink);
                 }
             }
@@ -78,8 +77,8 @@ public class PartyController {
                 }
                 partyDetailsRepository.save(partyDetails);
                 for (int i = 0; i < friendsArray.size(); i++) {
-                    partyAmountDue += partyControllerFunctions.addDueAmountToFriends(user, userId, friendsArray.get(i), friendsAmountArray.get(i));
-                    PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendsArray.get(i), friendsAmountArray.get(i));
+                    partyAmountDue += partyControllerFunctions.addDueAmountToFriends(user, userId, friendsArray.get(i), ((double)(Math.round(friendsAmountArray.get(i) * 100)))/100);
+                    PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendsArray.get(i), ((double)(Math.round(friendsAmountArray.get(i) * 100)))/100);
                     partyFriendsLinkRepository.save(partyFriendsLink);
                 }
 
