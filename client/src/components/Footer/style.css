@@ -1,0 +1,46 @@
+.container12 {
+  margin-top: 80px;
+  background-color: whitesmoke;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.center21 {
+  width: 80vw;
+}
+.heading12 {
+  margin-top: 20px;
+  font-family: "PT Sans", sans-serif;
+  font-size: 40px;
+  line-height: 35px;
+  margin-bottom: 30px;
+}
+.card12 {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 280px;
+  margin: auto;
+  height: 60vh;
+  text-align: center;
+  font-family: arial;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: white;
+  border-radius: 9px;
+}
+.title12 {
+  color: grey;
+  font-size: 18px;
+}
+.emaill12 {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 1px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 14px;
+  opacity: 0.7;
+}
