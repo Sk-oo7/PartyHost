@@ -119,6 +119,12 @@ function MainPage() {
       setErroralert(true)
     })
   }
+  const scrollDown = () => {
+    window.scrollTo({
+      top: 745,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div>
@@ -164,7 +170,7 @@ function MainPage() {
         <button className="home_button">
           <b>Home</b>
         </button>
-        <button className="about_button">About</button>
+        <button className="about_button" onClick={()=>scrollDown()}>About</button>
         {userexists && <div className="dropdown" >
           <button className="username_button"  style={{height:"45px",width:"180px"}}>
             <img style={{ height: "25px", float: "left" }} src={img} />
