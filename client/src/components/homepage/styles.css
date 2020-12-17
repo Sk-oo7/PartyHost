@@ -37,14 +37,15 @@
   margin-top: 25vh;
   background-color: whitesmoke;
   border-radius: 10px;
-  height: 30vh;
+  height: 25vh;
 }
 #center_alert2 {
-  height: 40vh;
+  height: 35vh;
   margin-top: 20vh;
 }
 .center_alert_input {
   margin-top: 25px;
+  margin-bottom: 20px;
   outline: none;
   width: 80%;
   border: 0px;
@@ -54,7 +55,7 @@
   height: 30px;
 }
 .center_alert_input2 {
-  margin-top: 33px;
+  margin-top: 25px;
   outline: none;
   width: 40%;
   margin-right: 10px;
@@ -87,6 +88,7 @@
   position: absolute;
   top: 15px;
   right: 15px;
+  cursor: pointer;
 }
 .center_alert_submit {
   margin-top: 7px;
@@ -115,20 +117,6 @@
   height: 37px;
   cursor: pointer;
 }
-input[type="submit"]:disabled {
-  outline: none;
-  background-color: #ec6969;
-  border: 0px;
-  padding: 5px;
-  color: #534e4e;
-  font-size: 15px;
-  border-radius: 40px;
-  margin-top: 10px;
-  margin-left: -6px;
-  width: 91%;
-  height: 37px;
-  cursor: no-drop;
-}
 
 .dropbtn {
   background-color: #4caf50;
@@ -148,6 +136,7 @@ input[type="submit"]:disabled {
 .username_button {
   background: none;
   width: 160px;
+  cursor: pointer;
 }
 
 .dropdown-content {
@@ -157,6 +146,7 @@ input[type="submit"]:disabled {
   min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  cursor: pointer;
 }
 
 .dropdown-content span {
@@ -208,6 +198,7 @@ input[type="submit"]:disabled {
   position: absolute;
   left: 100px;
   top: 75px;
+  cursor: pointer;
 }
 .friends_list {
   height: 55%;
@@ -259,12 +250,13 @@ input[type="submit"]:disabled {
   border: none;
   outline: none;
   background: #e75a5a;
-  border-radius: 25px;
+  border-radius: 30px;
   padding: 18px;
   width: 220px;
   height: 55px;
   font-size: 20px;
   padding-left: 20px;
+  cursor: pointer;
 }
 .navbar {
   display: flex;
@@ -277,6 +269,7 @@ input[type="submit"]:disabled {
   background: none;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 .hamburger_icon {
   height: 25px;
@@ -287,9 +280,9 @@ input[type="submit"]:disabled {
   border: none;
   outline: none;
   background: lightgray;
-  border-radius: 20px;
-  padding: 15px;
-  width: 100px;
+  border-radius: 30px;
+  padding: 0px;
+  width: 90px;
   margin-right: 2%;
   margin-left: 55%;
 }
@@ -298,6 +291,7 @@ input[type="submit"]:disabled {
   border: none;
   outline: none;
   margin-right: 2%;
+  cursor: pointer;
 }
 .owes_you {
   color: rgb(28, 190, 114);

@@ -68,6 +68,11 @@ function Form() {
         })
     }
 
+    const google=()=>{
+        setError("Currently unavailable")
+        setErroralert(true)
+    }
+
 
     return (
         <div className="login_form">
@@ -96,7 +101,7 @@ function Form() {
                  <span></span>
             </div>
             <br /><br />
-            <div className="signIn_with_google">
+            <div className="signIn_with_google" onClick={()=>google()}>
                 <img src="./google_image.png" />
                 <span></span>
                 <p>Sign In with Google</p>
@@ -106,13 +111,13 @@ function Form() {
                  <Link to="/register"> Create Account</Link>
                 </p>
             </div>
-            <Snackbar open={errAlert} autoHideDuration={2000} onClose={()=>setErroralert(false)}>
+            <Snackbar open={errAlert} autoHideDuration={4000} onClose={()=>setErroralert(false)}>
                 <Alert severity="error" onClose={()=>setErroralert(false)} >
                     {error}
                 </Alert>
             </Snackbar>
 
-             <Snackbar open={successAlert} autoHideDuration={2000} onClose={()=>setSuccessalert(false)} >
+             <Snackbar open={successAlert} autoHideDuration={4000} onClose={()=>setSuccessalert(false)} >
                 <Alert severity="success" onClose={()=>setSuccessalert(false)}>
                     {success}
                 </Alert>

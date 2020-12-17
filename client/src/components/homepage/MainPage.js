@@ -123,14 +123,14 @@ function MainPage() {
   return (
     <div>
     
-        {showAddfrnd && userexists && <div style={{position:"absolute",top:"0",bottom:"0",zIndex:"99",height:"100vh",width:"100vw",backgroundColor:"rgb(0,0,0,0.5)"}} ><div id="center_alert">
+        {showAddfrnd && userexists && <div style={{position:"absolute",top:"0",bottom:"0",zIndex:"99",height:"100vh",width:"100%",backgroundColor:"rgb(0,0,0,0.5)"}} ><div id="center_alert">
                   
           <span style={{position:"relative"}}><center className="center_alert_head">Add Friend</center></span>
           <img src="close_icon.png" id="close1" onClick={()=>{setAddfriend(false),setDisabled2(true),setFriend("")}} />
 
           <form onSubmit={(e)=>e.preventDefault()}>
 
-          <center><input type="textbox" className="center_alert_input" style={{borderRadius:"40px"}}
+          <center><input type="textbox" className="center_alert_input" style={{borderRadius:"40px",height:"38px"}}
           placeholder="Type to Search" onChange={(e)=>{setFriend(e.target.value), setDisabled2(false)}} value={addFriend} required/></center>
           <center><input disabled={disabled2} onClick={()=>submitFriend()} className="center_alert_submit" style={{borderRadius:"40px"}} type="submit" value="Add Friend"/></center>
 
@@ -139,12 +139,12 @@ function MainPage() {
         </div>
         </div>}
 
-      {showEditProfile && userexists &&  <div style={{position:"absolute",top:"0",bottom:"0",zIndex:"99",height:"100vh",width:"100vw",backgroundColor:"rgb(0,0,0,0.5)"}}><div id="center_alert2" >
+      {showEditProfile && userexists &&  <div style={{position:"absolute",top:"0",bottom:"0",zIndex:"99",height:"100vh",width:"100%",backgroundColor:"rgb(0,0,0,0.5)"}}><div id="center_alert2" >
         <span style={{position:"relative"}}><center className="center_alert_head">Edit Profile</center></span>
         <img src="close_icon.png" id="close2" onClick={()=>{setEditProfile(false),setDisabled(true),setFirstName(JSON.parse(localStorage.getItem("user"))?.firstName),setLastName(JSON.parse(localStorage.getItem("user"))?.lastName),setNumber(JSON.parse(localStorage.getItem("user"))?.mobileNumber)}}/>
         <form onSubmit={(e)=>e.preventDefault()}>
         <center>
-            <input type="textbox"  onChange={(e)=>{setFirstName(e.target.value), setDisabled(false)}} value={editFirstName} className="center_alert_input2" placeholder="  First Name" style={{borderRadius:"20px"}}required/>
+            <input type="textbox" onChange={(e)=>{setFirstName(e.target.value), setDisabled(false)}} value={editFirstName} className="center_alert_input2" placeholder="  First Name" style={{borderRadius:"20px",marginTop:"-10px"}}required/>
         <input type="textbox"  onChange={(e)=>{setLastName(e.target.value), setDisabled(false)}} value={editLastName} className="center_alert_input2" placeholder="  Last Name" style={{borderRadius:"20px"}}required/>
         </center>
         <br/>

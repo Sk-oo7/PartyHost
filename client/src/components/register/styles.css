@@ -94,10 +94,10 @@
 .signIn_with_google span {
   border-left: 1px solid #b8b894;
   height: 25px;
-  color: #b8b894;
+  color: gray;
 }
 .signIn_with_google p {
-  color: #b8b894;
+  color: gray;
 }
 .last_para p {
   margin-top: 20%;

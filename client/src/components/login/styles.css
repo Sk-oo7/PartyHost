@@ -57,6 +57,7 @@
   color: white;
   font-size: 15px;
   outline: none;
+  cursor: pointer;
 }
 .line {
   width: 60%;
@@ -81,18 +82,11 @@
   border-radius: 40px;
   padding: 1.7%;
   width: 40%;
+  cursor: pointer;
 }
 .signIn_with_google img {
   height: 30px;
   width: 33px;
-}
-.signIn_with_google span {
-  border-left: 1px solid #b8b894;
-  height: 25px;
-  color: #b8b894;
-}
-.signIn_with_google p {
-  color: #b8b894;
 }
 .last_para p {
   margin-top: 20%;
