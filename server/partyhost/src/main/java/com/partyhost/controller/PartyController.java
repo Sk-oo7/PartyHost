@@ -54,10 +54,9 @@ public class PartyController {
             double partyAmountDue = 0;
             if(splitEqually) {
                 double amountPerPerson = amount/(friendsArray.size() + 1);
-                partyAmountDue = amount - amountPerPerson;
                 partyDetailsRepository.save(partyDetails);
                 for (UUID friendId : friendsArray) {
-                    partyControllerFunctions.addDueAmountToFriends(user, userId, friendId, ((double)(Math.round(amountPerPerson * 100)))/100);
+                    partyAmountDue += partyControllerFunctions.addDueAmountToFriends(user, userId, friendId, ((double)(Math.round(amountPerPerson * 100)))/100);
                     PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, friendId, ((double)(Math.round(amountPerPerson * 100)))/100);
                     partyFriendsLinkRepository.save(partyFriendsLink);
                 }
@@ -84,7 +83,7 @@ public class PartyController {
                 }
 
             }
-            PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, userId, ((double)(Math.round((amount - partyAmountDue) * 100)))/100);
+            PartyFriendsLink partyFriendsLink = new PartyFriendsLink(partyDetails, userId, amount - partyAmountDue);
             partyFriendsLinkRepository.save(partyFriendsLink);
             return null;
         }
